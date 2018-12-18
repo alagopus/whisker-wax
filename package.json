@@ -7,10 +7,12 @@
   "author": "Klaus Rennecke <a.lagopus@gmail.com>",
   "license": "MIT",
   "directories": {
+    "bin": "./bin",
     "lib": "./lib",
     "test": "./test"
   },
   "files": [
+    "bin/wax",
     "lib/*.js"
   ],
   "bin": {
@@ -18,7 +20,7 @@
   },
   "scripts": {
     "fix": "eslint --fix .",
-    "lint": "eslint .",
+    "lint": "eslint . bin/*",
     "test": "tap test/*.js"
   },
   "devDependencies": {

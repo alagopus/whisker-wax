@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+/* vim: set ai sw=2 et terse: */
+
+if (process.argv.length < 3) {
+  console.error('usage: wax <template> [<input> [<output>]]')
+  process.exit(1)
+}
+
+/**
+ * Open input from a file, or stdin if fileName is '-'.
+ * @returns {stream.Readable} opened stream.
+ */
+function openInput (fileName) {
+  if (fileName !== '-') {
+    return require('fs').createReadStream(fileName, { encoding: 'utf8' })
+  }
+  process.stdin.setEncoding('utf8')
+  process.stdin.resume()
+  return process.stdin
+}
+
+/**
+ * Read all from an input stream and return a promise resolving its contents as string.
+ * @returns {Promise} resolving to the stream contents.
+ */
+function readAll (inputStream) {
+  let result = ''
+  return new Promise(resolve => {
+    inputStream.on('error', err => {
+      console.log('read error', err)
+      process.exit(1)
+    })
+    inputStream.on('data', function (chunk) {
+      result += chunk
+    })
+    inputStream.on('end', () => {
+      resolve(result)
+    })
+  })
+}
+
+readAll(openInput(process.argv[2])).then(template => {
+  let parser = require('../lib/parser')
+  let parsedTemplate = parser(template)
+  if (process.argv.length < 4) {
+    process.stdout.write(JSON.stringify(parsedTemplate, null, 2))
+    process.exit(0)
+  }
+  return readAll(openInput(process.argv[3])).then(input => {
+    return [parsedTemplate, JSON.parse(input)]
+  })
+}).then(params => {
+  if (params) {
+    let runner = require('../lib/runner')
+    runner(process.stdout, params[0], params[1])
+  }
+})

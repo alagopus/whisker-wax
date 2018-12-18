@@ -11,6 +11,6 @@ test('parse plain input', t => {
 
 test('parse embedded tag', t => {
   let result = parser('prefix string. {{tag.with.path}} suffix string.')
-  t.same(result, [ [ 'write', 'prefix string. ' ], [ 'quote', [ 'tag.with.path' ] ], [ 'write', ' suffix string.' ] ])
+  t.same(result, [ [ 'write', 'prefix string. ' ], [ 'quote', 'tag.with.path' ], [ 'write', ' suffix string.' ] ])
   t.end()
 })
