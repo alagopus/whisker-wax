@@ -19,9 +19,17 @@ test('wax usage', t => {
 test('wax simple template', t => {
   exec('wax test/_files/simple.mustache', (err, stdout, stderr) => {
     t.equal(err, null)
-    t.equal(stdout, '[\n  [\n    "write",\n    "prefix "\n  ],\n'
-    +'  [\n    "quote",\n    "path.leaf"\n  ],\n'
-    +'  [\n    "write",\n    " suffix\\nnew line\\n"\n  ]\n]')
+    t.equal(stdout, '[\n  [\n    "write",\n    "prefix "\n  ],\n' +
+      '  [\n    "quote",\n    "path.leaf"\n  ],\n' +
+      '  [\n    "write",\n    " suffix\\nnew line\\n"\n  ]\n]')
+    t.end()
+  })
+})
+
+test('wax empty input', t => {
+  exec('wax test/_files/simple.mustache test/_files/empty.input', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, 'prefix  suffix\nnew line\n')
     t.end()
   })
 })
@@ -30,6 +38,22 @@ test('wax simple input', t => {
   exec('wax test/_files/simple.mustache test/_files/simple.input1', (err, stdout, stderr) => {
     t.equal(err, null)
     t.equal(stdout, 'prefix path-leaf suffix\nnew line\n')
+    t.end()
+  })
+})
+
+test('wax quoted input', t => {
+  exec('wax test/_files/simple.mustache test/_files/simple.input2', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, 'prefix &lt;tag&amp;leaf/&gt; suffix\nnew line\n')
+    t.end()
+  })
+})
+
+test('wax unquoted input', t => {
+  exec('wax test/_files/unquote.mustache test/_files/simple.input2', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, 'prefix <tag&leaf/> suffix\nnew line\n')
     t.end()
   })
 })

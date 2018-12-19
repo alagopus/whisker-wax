@@ -14,3 +14,9 @@ test('parse embedded tag', t => {
   t.same(result, [ [ 'write', 'prefix string. ' ], [ 'quote', 'tag.with.path' ], [ 'write', ' suffix string.' ] ])
   t.end()
 })
+
+test('parse unquoted tag', t => {
+  let result = parser('prefix string. {{{tag.with.path}}} suffix string.')
+  t.same(result, [ [ 'write', 'prefix string. ' ], [ 'print', 'tag.with.path' ], [ 'write', ' suffix string.' ] ])
+  t.end()
+})
