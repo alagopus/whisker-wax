@@ -45,7 +45,7 @@ test('wax simple input', t => {
 test('wax quoted input', t => {
   exec('wax test/_files/simple.mustache test/_files/simple.input2', (err, stdout, stderr) => {
     t.equal(err, null)
-    t.equal(stdout, 'prefix &lt;tag&amp;leaf/&gt; suffix\nnew line\n')
+    t.equal(stdout, 'prefix &lt;tag&amp;leaf&gt;att&#61;&#96;ri&quot;ut&#39;&lt;/tag&gt; suffix\nnew line\n')
     t.end()
   })
 })
@@ -53,7 +53,7 @@ test('wax quoted input', t => {
 test('wax unquoted input', t => {
   exec('wax test/_files/unquote.mustache test/_files/simple.input2', (err, stdout, stderr) => {
     t.equal(err, null)
-    t.equal(stdout, 'prefix <tag&leaf/> suffix\nnew line\n')
+    t.equal(stdout, 'prefix <tag&leaf>att=`ri"ut\'</tag> suffix\nnew line\n')
     t.end()
   })
 })
