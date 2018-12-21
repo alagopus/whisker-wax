@@ -54,4 +54,7 @@ readAll(openInput(process.argv[2])).then(template => {
     let runner = require('../lib/runner')
     runner(process.stdout, params[0], params[1])
   }
+}).catch(failure => {
+  process.stderr.write('error: ' + failure + '\n')
+  process.exit(1)
 })

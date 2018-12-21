@@ -57,3 +57,19 @@ test('wax unquoted input', t => {
     t.end()
   })
 })
+
+test('wax non-false section', t => {
+  exec('wax test/_files/non_false.mustache test/_files/non_false.input', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, '\n  Hi Jon!\n\n')
+    t.end()
+  })
+})
+
+test('wax non-empty list', t => {
+  exec('wax test/_files/non_empty_lists.mustache test/_files/non_empty_lists.input', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, '\n  <b>resque</b>\n\n  <b>hub</b>\n\n  <b>rip</b>\n\n')
+    t.end()
+  })
+})
