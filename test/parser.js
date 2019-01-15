@@ -5,18 +5,18 @@ const parser = require('../lib/parser')
 
 test('parse plain input', t => {
   let result = parser('12345')
-  t.same(result, [ [ 'write', '12345' ] ])
+  t.same(result, [ [ 'w', '12345' ] ])
   t.end()
 })
 
 test('parse embedded tag', t => {
   let result = parser('prefix string. {{tag.with.path}} suffix string.')
-  t.same(result, [ [ 'write', 'prefix string. ' ], [ 'quote', 'tag.with.path' ], [ 'write', ' suffix string.' ] ])
+  t.same(result, [ [ 'w', 'prefix string. ' ], [ 'q', 'tag.with.path' ], [ 'w', ' suffix string.' ] ])
   t.end()
 })
 
 test('parse unquoted tag', t => {
   let result = parser('prefix string. {{{tag.with.path}}} suffix string.')
-  t.same(result, [ [ 'write', 'prefix string. ' ], [ 'print', 'tag.with.path' ], [ 'write', ' suffix string.' ] ])
+  t.same(result, [ [ 'w', 'prefix string. ' ], [ 'p', 'tag.with.path' ], [ 'w', ' suffix string.' ] ])
   t.end()
 })

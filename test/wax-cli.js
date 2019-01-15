@@ -19,9 +19,9 @@ test('wax usage', t => {
 test('wax simple template', t => {
   exec('wax test/_files/simple.mustache', (err, stdout, stderr) => {
     t.equal(err, null)
-    t.equal(stdout, '[\n  [\n    "write",\n    "prefix "\n  ],\n' +
-      '  [\n    "quote",\n    "path.leaf"\n  ],\n' +
-      '  [\n    "write",\n    " suffix\\nnew line\\n"\n  ]\n]')
+    t.equal(stdout, '[\n  [\n    "w",\n    "prefix "\n  ],\n' +
+      '  [\n    "q",\n    "path.leaf"\n  ],\n' +
+      '  [\n    "w",\n    " suffix\\nnew line\\n"\n  ]\n]')
     t.end()
   })
 })
