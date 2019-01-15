@@ -73,3 +73,11 @@ test('wax non-empty list', t => {
     t.end()
   })
 })
+
+test('wax parent context', t => {
+  exec('wax test/_files/parent_context.mustache test/_files/parent_context.input', (err, stdout, stderr) => {
+    t.equal(err, null)
+    t.equal(stdout, '<dl>\n\n  <dt>parent</dt>\n  <dd>resque</dd>\n\n  <dt>parent</dt>\n  <dd>hub</dd>\n\n  <dt>parent</dt>\n  <dd>rip</dd>\n\n</dl>\n')
+    t.end()
+  })
+})

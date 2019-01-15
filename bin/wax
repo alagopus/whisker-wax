@@ -47,12 +47,12 @@ readAll(openInput(process.argv[2])).then(template => {
     process.exit(0)
   }
   return readAll(openInput(process.argv[3])).then(input => {
-    return [parsedTemplate, JSON.parse(input)]
+    return [JSON.parse(input), parsedTemplate]
   })
 }).then(params => {
   if (params) {
-    let runner = require('../lib/runner')
-    runner(process.stdout, params[0], params[1])
+    let Runner = require('../lib/runner')
+    new Runner(process.stdout, params[0]).run(params[1])
   }
 }).catch(failure => {
   process.stderr.write('error: ' + failure + '\n')
