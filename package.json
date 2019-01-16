@@ -20,9 +20,10 @@
   },
   "scripts": {
     "fix": "eslint --fix .",
-    "good": "run-s lint test",
+    "good": "run-s lint test || run-s report",
     "lint": "eslint . bin/*",
-    "test": "tap test/*.js"
+    "test": "tap test/*.js --100",
+    "report": "tap --coverage-report=html"
   },
   "devDependencies": {
     "eslint": "^5.10.0",

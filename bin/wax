@@ -6,13 +6,17 @@ if (process.argv.length < 3) {
   process.exit(1)
 }
 
+const fs = require('fs')
+const path = require('path')
+const parser = require('../lib/parser')
+
 /**
  * Open input from a file, or stdin if fileName is '-'.
  * @returns {stream.Readable} opened stream.
  */
 function openInput (fileName) {
   if (fileName !== '-') {
-    return require('fs').createReadStream(fileName, { encoding: 'utf8' })
+    return fs.createReadStream(fileName, { encoding: 'utf8' })
   }
   process.stdin.setEncoding('utf8')
   process.stdin.resume()
@@ -39,22 +43,49 @@ function readAll (inputStream) {
   })
 }
 
+function resolver (base) {
+  return name => {
+    let filename
+    let parsefile = JSON.parse
+    let basename = path.resolve(base, name)
+    if (fs.existsSync(basename)) {
+      filename = basename
+    } else if (fs.existsSync(basename + '.json')) {
+      filename = basename + '.json'
+    } else if (fs.existsSync(basename + '.mustache')) {
+      filename = basename + '.mustache'
+    }
+    if (filename && /\.mustache$/i.test(filename)) {
+      parsefile = parser
+    }
+    return {
+      template: parsefile(fs.readFileSync(filename)),
+      resolver: resolver(path.dirname(filename)),
+      context: { '$filename': filename }
+    }
+  }
+}
+
 readAll(openInput(process.argv[2])).then(template => {
-  let parser = require('../lib/parser')
   let parsedTemplate = parser(template)
   if (process.argv.length < 4) {
     process.stdout.write(JSON.stringify(parsedTemplate, null, 2))
     process.exit(0)
   }
+  let base = path.dirname(path.resolve(process.argv[2]))
+  if (/.js$/.test(process.argv[3])) {
+    return [parsedTemplate, require(process.argv[3]), resolver(base)]
+  }
   return readAll(openInput(process.argv[3])).then(input => {
-    return [JSON.parse(input), parsedTemplate]
+    return [parsedTemplate, JSON.parse(input), resolver(base)]
   })
 }).then(params => {
   if (params) {
     let Runner = require('../lib/runner')
-    new Runner(process.stdout, params[0]).run(params[1])
+    let instance = new Runner(process.stdout)
+    instance.run.apply(instance, params)
   }
 }).catch(failure => {
-  process.stderr.write('error: ' + failure + '\n')
+  process.stderr.write('error: ' + failure + '\n' + failure.stack + '\n')
   process.exit(1)
 })
