@@ -71,7 +71,7 @@ Will produce: "Hello, JEFF!"
 parser.js takes string and returns JSON. Its output can be used with the
 runner, or stored as compiled template.
 
-### Runnner
+### Runner
 
 runner.js needs to be created with a Writer, which can be a stream.Writable
 or any other object that has a write(string) method.
@@ -79,9 +79,9 @@ or any other object that has a write(string) method.
 Runner.run executes a template and writes result to its current writer. It
 takes three parameters:
 
- # Template is the JSON compiled template, as a JavaScript object
- # Context is the current data object to use while evaluating strings
- # Resolver is an object allowing to load partials at runtime
+ 1. Template is the JSON compiled template, as a JavaScript object
+ 2. Context is the current data object to use while evaluating strings
+ 3. Resolver is an object allowing to load partials at runtime
 
 ### Resolver
 
