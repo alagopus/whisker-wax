@@ -19,9 +19,7 @@ test('wax usage', t => {
 test('wax simple template', t => {
   exec('wax test/_files/simple.mustache', (err, stdout, stderr) => {
     t.equal(err, null)
-    t.equal(stdout, '[\n  [\n    "w",\n    "prefix "\n  ],\n' +
-      '  [\n    "q",\n    "path.leaf"\n  ],\n' +
-      '  [\n    "w",\n    " suffix\\nnew line\\n"\n  ]\n]')
+    t.equal(stdout.replace(/\s/gm, ''), '[[0,"prefix"],[2,"path.leaf"],[0,"suffix\\nnewline\\n"]]')
     t.end()
   })
 })
@@ -38,70 +36,6 @@ test('wax simple input', t => {
   exec('wax test/_files/simple.mustache test/_files/simple.input1', (err, stdout, stderr) => {
     t.equal(err, null)
     t.equal(stdout, 'prefix path-leaf suffix\nnew line\n')
-    t.end()
-  })
-})
-
-test('wax quoted input', t => {
-  exec('wax test/_files/simple.mustache test/_files/simple.input2', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, 'prefix &lt;tag&amp;leaf&gt;att&#61;&#96;ri&quot;ut&#39;&lt;/tag&gt; suffix\nnew line\n')
-    t.end()
-  })
-})
-
-test('wax unquoted input', t => {
-  exec('wax test/_files/unquote.mustache test/_files/simple.input2', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, 'prefix <tag&leaf>att=`ri"ut\'</tag> suffix\nnew line\n')
-    t.end()
-  })
-})
-
-test('wax non-false section', t => {
-  exec('wax test/_files/non_false.mustache test/_files/non_false.input', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, '\n  Hi Jon!\n\n')
-    t.end()
-  })
-})
-
-test('wax false section', t => {
-  exec('wax test/_files/false.mustache test/_files/false.input', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, 'no person\n\n')
-    t.end()
-  })
-})
-
-test('wax undefined list', t => {
-  exec('wax test/_files/non_empty_lists.mustache test/_files/empty.input', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, '\n')
-    t.end()
-  })
-})
-
-test('wax non-empty list', t => {
-  exec('wax test/_files/non_empty_lists.mustache test/_files/non_empty_lists.input', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, '\n  <b>resque</b>\n\n  <b>hub</b>\n\n  <b>rip</b>\n\n')
-    t.end()
-  })
-})
-
-test('wax lambda list', t => {
-  exec('wax test/_files/non_empty_lists.mustache ../test/_files/lambda_list.js', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, '\n  <b>1</b>\n\n  <b>2</b>\n\n  <b>3</b>\n\n  <b>4</b>\n\n  <b>5</b>\n\n')
-    t.end()
-  })
-})
-
-test('wax parent context', t => {
-  exec('wax test/_files/parent_context.mustache test/_files/parent_context.input', (err, stdout, stderr) => {
-    t.equal(err, null)
-    t.equal(stdout, '<dl>\n\n  <dt>parent</dt>\n  <dd>resque</dd>\n\n  <dt>parent</dt>\n  <dd>hub</dd>\n\n  <dt>parent</dt>\n  <dd>rip</dd>\n\n</dl>\n')
     t.end()
   })
 })
@@ -133,7 +67,7 @@ test('wax subdir partial', t => {
 test('wax bogus partial', t => {
   exec('wax test/_files/bogus_partial.mustache test/_files/simple.input1', (err, stdout, stderr) => {
     t.match(err, { code: 1 })
-    t.ok(/invalid step: \?/.test(stderr))
+    t.match(stderr, /invalid step: \?/)
     t.end()
   })
 })

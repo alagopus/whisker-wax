@@ -10,19 +10,19 @@ test('parse empty input', t => {
 })
 
 test('parse plain input', t => {
-  t.same(parser('12345'), [ [ 'w', '12345' ] ])
-  t.same(parser('12345{{! comments are dropped }}'), [ [ 'w', '12345' ] ])
+  t.same(parser('12345'), [ [ 0, '12345' ] ])
+  t.same(parser('12345{{! comments are dropped }}'), [ [ 0, '12345' ] ])
   t.end()
 })
 
 test('parse embedded tag', t => {
   let result = parser('prefix string. {{tag.with.path}} suffix string.')
-  t.same(result, [ [ 'w', 'prefix string. ' ], [ 'q', 'tag.with.path' ], [ 'w', ' suffix string.' ] ])
+  t.same(result, [ [ 0, 'prefix string. ' ], [ 2, 'tag.with.path' ], [ 0, ' suffix string.' ] ])
   t.end()
 })
 
 test('parse unquoted tag', t => {
-  let expect = [ [ 'w', 'prefix string. ' ], [ 'p', 'tag.with.path' ] ]
+  let expect = [ [ 0, 'prefix string. ' ], [ 1, 'tag.with.path' ] ]
   t.same(parser('prefix string. {{{tag.with.path}}}'), expect)
   t.same(parser('prefix string. {{&tag.with.path}}'), expect)
   t.end()

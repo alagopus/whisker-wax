@@ -1,6 +1,6 @@
 [
   [
-    "w",
+    0,
     "compiled prefix "
   ],
   [
@@ -8,7 +8,7 @@
     "path.leaf"
   ],
   [
-    "w",
+    0,
     " suffix compiled\n"
   ]
 ]
