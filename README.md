@@ -1,28 +1,29 @@
 # whisker-wax
 
-mustache-ish parser, engine, compiler
+Template system closely related to Mustache.
 
 This software tries to be lean, fast and composable.
+
+Coverage should always be kept complete.
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
 ## Overview
 
-There are two parts to success:
+There are two parts:
 
  * a parser for templates in mustache syntax, creating JSON output
- * a runner that can execute JSON output from the parser
+ * a runner that can execute JSON template output from the parser
 
 With the above parts, it is possible to both pre-compile templates as
 JavaScript to have maximum performance, and dynamically load templates
-as needed and execute needed on the server or client or both.
-
-See also: http://mustache.github.io/
+as needed and render on the server or client or both.
 
 ## Quirks
 
-There are a few differences from standard mustache:
+There are a few differences from standard Mustache:
 
+ * Supports nested paths, like Handlebars does: `{{author.name}}`
  * Changing delimiters is not supported; `{{=<% %>=}}` does not work
  * Lambdas will _not_ be called with the block if used for sections
  * Instead, lambdas can appear in any tag, and are evaluated runtime
@@ -31,6 +32,8 @@ There are a few differences from standard mustache:
 Most of these differences are a result from allowing pre-compiled JSON
 format templates. Compilation requires that sections are already parsed
 or otherwise the parser would still need to be around at runtime.
+
+See also: http://mustache.github.io/, https://handlebarsjs.com/
 
 ## Lambdas
 
