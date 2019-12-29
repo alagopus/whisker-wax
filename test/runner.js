@@ -7,7 +7,7 @@ const Runner = require('../lib/runner')
 
 function exec (template, context) {
   let buffer = ''
-  let runner = new Runner({ write: function (chunk) { buffer += chunk } })
+  const runner = new Runner({ write: function (chunk) { buffer += chunk } })
   runner.run(template, context)
   return buffer
 }

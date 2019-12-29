@@ -47,7 +47,7 @@ function resolver (base) {
   return name => {
     let filename
     let parsefile = JSON.parse
-    let basename = path.resolve(base, name)
+    const basename = path.resolve(base, name)
     if (fs.existsSync(basename)) {
       filename = basename
     } else if (fs.existsSync(basename + '.json')) {
@@ -61,18 +61,18 @@ function resolver (base) {
     return {
       template: parsefile(fs.readFileSync(filename)),
       resolver: resolver(path.dirname(filename)),
-      context: { '$filename': filename }
+      context: { $filename: filename }
     }
   }
 }
 
 readAll(openInput(process.argv[2])).then(template => {
-  let parsedTemplate = parser(template)
+  const parsedTemplate = parser(template)
   if (process.argv.length < 4) {
     process.stdout.write(JSON.stringify(parsedTemplate, null, 2))
     process.exit(0)
   }
-  let base = path.dirname(path.resolve(process.argv[2]))
+  const base = path.dirname(path.resolve(process.argv[2]))
   if (/.js$/.test(process.argv[3])) {
     return [parsedTemplate, require(process.argv[3]), resolver(base)]
   }
@@ -81,8 +81,8 @@ readAll(openInput(process.argv[2])).then(template => {
   })
 }).then(params => {
   if (params) {
-    let Runner = require('../lib/runner')
-    let instance = new Runner(process.stdout)
+    const Runner = require('../lib/runner')
+    const instance = new Runner(process.stdout)
     instance.run.apply(instance, params)
   }
 }).catch(failure => {

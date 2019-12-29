@@ -19,7 +19,7 @@
     "wwp": "./index.js"
   },
   "scripts": {
-    "fix": "eslint --fix .",
+    "fix": "eslint --fix . bin/*",
     "good": "run-s lint test || run-s report",
     "lint": "eslint . bin/*",
     "test": "tap test/*.js --100",
