@@ -15,9 +15,6 @@
     "bin/wax",
     "lib/*.js"
   ],
-  "bin": {
-    "wwp": "./index.js"
-  },
   "scripts": {
     "fix": "eslint --fix . bin/*",
     "good": "run-s lint test || run-s report",
