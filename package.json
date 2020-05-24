@@ -16,9 +16,9 @@
     "lib/*.js"
   ],
   "scripts": {
-    "fix": "eslint --fix . bin/*",
+    "fix": "standard --fix . bin/*",
     "good": "run-s lint test || run-s report",
-    "lint": "eslint . bin/*",
+    "lint": "standard . bin/*",
     "test": "tap test/*.js --100",
     "report": "tap --coverage-report=html"
   },
