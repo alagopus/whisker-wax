@@ -1,6 +1,6 @@
 {
   "name": "whisker-wax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "mustache parser, engine, compiler",
   "main": "index.js",
   "repository": "git@github.com:alagopus/whisker-wax.git",
