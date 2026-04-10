@@ -19,8 +19,8 @@
     "fix": "standard --fix . bin/*",
     "good": "run-s lint test || run-s report",
     "lint": "standard . bin/*",
-    "test": "tap test/*.js --100",
     "report": "tap --coverage-report=html",
+    "test": "tap run test/*.js --show-full-coverage",
     "update": "yarn upgrade --non-interactive --registry=https://registry.yarnpkg.com"
   },
   "devDependencies": {

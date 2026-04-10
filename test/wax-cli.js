@@ -10,7 +10,7 @@ function exec (command, callback) {
 
 test('wax usage', t => {
   exec('wax', (err, stdout, stderr) => {
-    t.notEqual(err, null)
+    t.notSame(err, null)
     t.equal(stderr.indexOf('usage'), 0)
     t.end()
   })
