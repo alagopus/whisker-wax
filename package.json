@@ -4,8 +4,11 @@
   "description": "mustache parser, engine, compiler",
   "main": "index.js",
   "repository": "git@github.com:alagopus/whisker-wax.git",
-  "author": "Klaus Rennecke <a.lagopus@gmail.com>",
+  "author": "Klaus Rennecke <klaus@rennecke.art>",
   "license": "MIT",
+  "bin": {
+    "wax": "bin/wax"
+  },
   "directories": {
     "bin": "./bin",
     "lib": "./lib",
@@ -27,5 +30,8 @@
     "npm-run-all": "^4.1.5",
     "standard": "^17.1.2",
     "tap": "^21.7.2"
+  },
+  "engines": {
+    "node": ">=20.20.2"
   }
 }
