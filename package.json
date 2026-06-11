@@ -3,7 +3,10 @@
   "version": "1.3.2",
   "description": "mustache parser, engine, compiler",
   "main": "index.js",
-  "repository": "git@github.com:alagopus/whisker-wax.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alagopus/whisker-wax.git"
+  },
   "author": "Klaus Rennecke <klaus@rennecke.art>",
   "license": "MIT",
   "bin": {
