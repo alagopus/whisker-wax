@@ -76,7 +76,7 @@ test('access parent context', t => {
 
 test('example from readme', t => {
   const result = exec(parser('Hello, {{toupper user.name}}!'), {
-    user: { name: 'Jeff' },
+    user: new URLSearchParams('name=Jeff'),
     toupper: function (path) {
       this.write(this.value(path).toUpperCase())
     }
