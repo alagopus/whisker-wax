@@ -111,7 +111,7 @@ const op = {
   write: 0,
   print: 1,
   quote: 2,
-  not: 3,
+  unless: 3,
   section: 4,
   partial: 5
 }
