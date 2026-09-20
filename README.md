@@ -33,7 +33,7 @@ Most of these differences are a result from allowing pre-compiled JSON
 format templates. Compilation requires that sections are already parsed
 or otherwise the parser would still need to be around at runtime.
 
-See also: https://github.com/mustache/spec, https://handlebarsjs.com/
+See also: https://mustache.github.io, https://handlebarsjs.com/
 
 ## Lambdas
 
